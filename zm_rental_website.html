@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="author" content="مهندس يوسف — خدمات IT وحلول رقمية"/>
+<meta name="description" content="شركة زياد منصور لتأجير السيارات — نموذج تجريبي | تصميم وتطوير: مهندس يوسف"/>
+<!-- ============================================
+     تصميم وتطوير: مهندس يوسف
+     خدمات IT وحلول رقمية
+     نموذج تجريبي | Demo Website
+     ============================================ -->
+<title>شركة زياد منصور لتأجير السيارات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+  :root {
+    --gold: #C9A227;
+    --gold-light: #E8C547;
+    --gold-dark: #9B7B1A;
+    --bg: #080808;
+    --bg2: #111111;
+    --bg3: #1A1A1A;
+    --bg4: #222222;
+    --text: #F0EDE6;
+    --text-muted: #999;
+    --border: rgba(201,162,39,0.2);
+    --radius: 12px;
+    --radius-lg: 20px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    direction: rtl;
+    overflow-x: hidden;
+  }
+  a { text-decoration: none; color: inherit; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg2); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
+
+  /* NAVBAR */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 72px;
+    transition: all 0.3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 30px rgba(201,162,39,0.08); }
+  .nav-logo { display: flex; align-items: center; gap: 12px; }
+  .logo-icon {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; color: #000; font-weight: 900;
+  }
+  .logo-text { line-height: 1.2; }
+  .logo-text span:first-child { display: block; font-size: 15px; font-weight: 800; color: var(--gold); }
+  .logo-text span:last-child { display: block; font-size: 11px; color: var(--text-muted); font-weight: 400; }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a { font-size: 14px; font-weight: 600; color: var(--text-muted); transition: color 0.2s; position: relative; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; right: 0;
+    width: 0; height: 2px; background: var(--gold);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: var(--gold); color: #000;
+    padding: 10px 24px; border-radius: 8px;
+    font-weight: 800; font-size: 14px;
+    transition: all 0.2s; border: none; cursor: pointer;
+  }
+  .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--bg);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 100px 5% 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201,162,39,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 80% 80%, rgba(201,162,39,0.06) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0; opacity: 0.04;
+    background-image:
+      linear-gradient(rgba(201,162,39,0.5) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,162,39,0.5) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201,162,39,0.1);
+    border: 1px solid rgba(201,162,39,0.3);
+    color: var(--gold); padding: 8px 20px; border-radius: 50px;
+    font-size: 13px; font-weight: 600; margin-bottom: 28px;
+    animation: fadeDown 0.8s ease;
+    position: relative; z-index: 1;
+  }
+  .badge-dot { width: 8px; height: 8px; background: #4CAF50; border-radius: 50%; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.3)} }
+  .hero h1 {
+    font-size: clamp(42px, 7vw, 80px);
+    font-weight: 900; line-height: 1.1;
+    margin-bottom: 16px;
+    position: relative; z-index: 1;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+  .hero h1 .highlight {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 18px; color: var(--text-muted); font-weight: 400;
+    max-width: 560px; line-height: 1.8; margin: 0 auto 40px;
+    position: relative; z-index: 1;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+  .hero-actions {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    position: relative; z-index: 1;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--gold); color: #000;
+    padding: 16px 36px; border-radius: 10px;
+    font-weight: 800; font-size: 16px; cursor: pointer;
+    transition: all 0.25s; border: none;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(201,162,39,0.35); }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: transparent; color: var(--text);
+    padding: 16px 36px; border-radius: 10px;
+    font-weight: 700; font-size: 16px; cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.25s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .hero-car-wrap {
+    position: relative; z-index: 1; margin-top: 60px; width: 100%; max-width: 800px;
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+  .hero-car-svg {
+    width: 100%; filter: drop-shadow(0 20px 60px rgba(201,162,39,0.2));
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+  .hero-stats {
+    display: flex; gap: 48px; justify-content: center;
+    margin-top: 60px; position: relative; z-index: 1;
+    animation: fadeUp 0.8s ease 0.5s both;
+  }
+  .stat-item { text-align: center; }
+  .stat-num { font-size: 36px; font-weight: 900; color: var(--gold); line-height: 1; }
+  .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-16px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  /* FEATURES BAR */
+  .features-bar {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 5%;
+  }
+  .features-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 20px; max-width: 1100px; margin: 0 auto;
+  }
+  .feature-item {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .feat-icon {
+    width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+    background: rgba(201,162,39,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--gold);
+  }
+  .feat-title { font-size: 15px; font-weight: 700; }
+  .feat-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+  /* SECTIONS */
+  section { padding: 90px 5%; }
+  .sec-header { text-align: center; margin-bottom: 60px; }
+  .sec-tag {
+    display: inline-block;
+    color: var(--gold); font-size: 13px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .sec-title { font-size: clamp(28px, 4vw, 42px); font-weight: 900; line-height: 1.2; }
+  .sec-sub { font-size: 16px; color: var(--text-muted); margin-top: 12px; max-width: 520px; margin-inline: auto; }
+  .gold-line {
+    width: 60px; height: 3px; background: linear-gradient(90deg, var(--gold), transparent);
+    margin: 16px auto 0; border-radius: 2px;
+  }
+
+  /* FLEET */
+  .fleet { background: var(--bg); }
+  .car-filters {
+    display: flex; gap: 12px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 10px 22px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.12);
+    background: transparent; color: var(--text-muted); font-family: 'Cairo', sans-serif;
+    font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+  }
+  .filter-btn.active, .filter-btn:hover {
+    background: var(--gold); color: #000; border-color: var(--gold);
+  }
+  .cars-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px; max-width: 1100px; margin: 0 auto;
+  }
+  .car-card {
+    background: var(--bg3);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-lg);
+    overflow: hidden; transition: all 0.35s; cursor: pointer;
+    position: relative;
+  }
+  .car-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px rgba(201,162,39,0.18);
+  }
+  .car-image {
+    height: 180px; background: var(--bg4);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .car-image svg { width: 85%; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); transition: transform 0.4s; }
+  .car-card:hover .car-image svg { transform: scale(1.05); }
+  .car-badge-type {
+    position: absolute; top: 12px; right: 12px;
+    background: rgba(201,162,39,0.15); border: 1px solid rgba(201,162,39,0.3);
+    color: var(--gold); font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px;
+  }
+  .car-body { padding: 20px; }
+  .car-make { font-size: 12px; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; }
+  .car-name { font-size: 20px; font-weight: 800; margin: 4px 0 14px; }
+  .car-specs {
+    display: flex; gap: 16px; margin-bottom: 18px;
+    padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .spec { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
+  .spec i { color: var(--gold); font-size: 13px; }
+  .car-footer { display: flex; align-items: center; justify-content: space-between; }
+  .car-price { }
+  .price-label { font-size: 11px; color: var(--text-muted); }
+  .price-val { font-size: 22px; font-weight: 900; color: var(--gold); line-height: 1; }
+  .price-iqd { font-size: 12px; color: var(--text-muted); }
+  .book-btn {
+    background: var(--gold); color: #000;
+    padding: 10px 20px; border-radius: 8px;
+    font-weight: 800; font-size: 13px; border: none; cursor: pointer;
+    transition: all 0.2s; font-family: 'Cairo', sans-serif;
+  }
+  .book-btn:hover { background: var(--gold-light); }
+
+  /* BOOKING SECTION */
+  .booking { background: var(--bg2); }
+  .booking-wrap {
+    max-width: 900px; margin: 0 auto;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .booking-top {
+    background: linear-gradient(135deg, #1A1500, #0D0D0D);
+    border-bottom: 1px solid var(--border);
+    padding: 30px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .booking-top h3 { font-size: 22px; font-weight: 800; }
+  .booking-top span { font-size: 13px; color: var(--text-muted); }
+  .booking-form { padding: 36px 40px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group label { font-size: 13px; font-weight: 700; color: var(--text-muted); }
+  .form-group input, .form-group select, .form-group textarea {
+    background: var(--bg4); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px; padding: 14px 16px;
+    color: var(--text); font-family: 'Cairo', sans-serif; font-size: 14px;
+    transition: border-color 0.2s; outline: none; width: 100%;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--gold);
+  }
+  .form-group select option { background: var(--bg3); }
+  .form-full { grid-column: 1 / -1; }
+  .form-submit {
+    width: 100%; padding: 16px; border-radius: 10px;
+    background: var(--gold); color: #000; font-family: 'Cairo', sans-serif;
+    font-size: 16px; font-weight: 800; border: none; cursor: pointer;
+    transition: all 0.25s; margin-top: 8px;
+  }
+  .form-submit:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 10px 28px rgba(201,162,39,0.3); }
+
+  /* WHY US */
+  .why { background: var(--bg); }
+  .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1000px; margin: 0 auto; }
+  .why-card {
+    background: var(--bg3); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius-lg); padding: 32px 28px;
+    text-align: center; transition: all 0.3s;
+  }
+  .why-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+  .why-icon {
+    width: 64px; height: 64px; border-radius: 16px;
+    background: rgba(201,162,39,0.1); display: flex; align-items: center; justify-content: center;
+    font-size: 28px; color: var(--gold); margin: 0 auto 20px;
+  }
+  .why-title { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+  .why-desc { font-size: 14px; color: var(--text-muted); line-height: 1.8; }
+
+  /* BRANCHES */
+  .branches { background: var(--bg2); }
+  .branches-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1100px; margin: 0 auto; }
+  .branch-card {
+    background: var(--bg3); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-lg); padding: 30px; transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .branch-card::before {
+    content: ''; position: absolute; top: 0; right: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .branch-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+  .branch-num {
+    font-size: 48px; font-weight: 900; color: rgba(201,162,39,0.1);
+    line-height: 1; margin-bottom: 16px;
+  }
+  .branch-name { font-size: 20px; font-weight: 800; color: var(--gold); margin-bottom: 16px; }
+  .branch-address {
+    font-size: 14px; color: var(--text-muted); line-height: 1.9;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .branch-address i { color: var(--gold); margin-top: 3px; font-size: 16px; flex-shrink: 0; }
+  .branch-hours {
+    margin-top: 16px; display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: #4CAF50; font-weight: 700;
+  }
+  .branch-hours i { font-size: 14px; }
+
+  /* REVIEWS */
+  .reviews { background: var(--bg); }
+  .reviews-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; }
+  .review-card {
+    background: var(--bg3); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-lg); padding: 28px;
+    transition: all 0.3s;
+  }
+  .review-card:hover { border-color: rgba(201,162,39,0.3); }
+  .review-stars { color: var(--gold); font-size: 16px; margin-bottom: 14px; }
+  .review-text { font-size: 14px; line-height: 1.9; color: var(--text-muted); margin-bottom: 20px; }
+  .review-author { display: flex; align-items: center; gap: 12px; }
+  .author-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 700; color: #000;
+  }
+  .author-name { font-size: 14px; font-weight: 700; }
+  .author-date { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .google-badge {
+    margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted);
+  }
+  .google-badge i { color: #EA4335; }
+
+  /* RATINGS SUMMARY */
+  .rating-summary {
+    max-width: 400px; margin: 0 auto 50px;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 32px;
+    text-align: center;
+  }
+  .big-rating { font-size: 72px; font-weight: 900; color: var(--gold); line-height: 1; }
+  .rating-stars { font-size: 24px; color: var(--gold); margin: 8px 0; }
+  .rating-count { font-size: 14px; color: var(--text-muted); }
+
+  /* CONTACT */
+  .contact { background: var(--bg2); }
+  .contact-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .contact-info h3 { font-size: 32px; font-weight: 900; margin-bottom: 20px; }
+  .contact-items { display: flex; flex-direction: column; gap: 20px; }
+  .contact-item { display: flex; align-items: center; gap: 16px; }
+  .ci-icon {
+    width: 52px; height: 52px; border-radius: 12px; flex-shrink: 0;
+    background: rgba(201,162,39,0.1); border: 1px solid rgba(201,162,39,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; color: var(--gold);
+  }
+  .ci-label { font-size: 12px; color: var(--text-muted); }
+  .ci-value { font-size: 17px; font-weight: 700; }
+  .social-row { display: flex; gap: 14px; margin-top: 28px; }
+  .social-btn {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--bg4); border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--text-muted);
+    transition: all 0.2s; cursor: pointer;
+  }
+  .social-btn:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+  /* CTA BANNER */
+  .cta-banner {
+    background: linear-gradient(135deg, #1A1300, #0D0D0D);
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 70px 5%; text-align: center;
+  }
+  .cta-banner h2 { font-size: 36px; font-weight: 900; margin-bottom: 12px; }
+  .cta-banner p { font-size: 16px; color: var(--text-muted); margin-bottom: 32px; }
+  .cta-phones { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+  .phone-badge {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--bg3); border: 1px solid var(--border);
+    padding: 14px 28px; border-radius: 50px;
+    font-size: 18px; font-weight: 800; color: var(--gold);
+    transition: all 0.2s; cursor: pointer;
+  }
+  .phone-badge:hover { background: rgba(201,162,39,0.1); transform: scale(1.03); }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 40px 5%;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-brand { display: flex; align-items: center; gap: 12px; }
+  .footer-copy { font-size: 13px; color: var(--text-muted); }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { font-size: 13px; color: var(--text-muted); transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* WHATSAPP FLOAT */
+  .wa-float {
+    position: fixed; bottom: 30px; left: 30px; z-index: 999;
+    width: 60px; height: 60px; border-radius: 50%;
+    background: #25D366; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; cursor: pointer;
+    box-shadow: 0 8px 30px rgba(37,211,102,0.4);
+    animation: waPop 0.6s ease 1s both;
+    transition: transform 0.2s;
+  }
+  .wa-float:hover { transform: scale(1.1); }
+  @keyframes waPop { from{opacity:0;transform:scale(0)} to{opacity:1;transform:scale(1)} }
+
+  /* NOTIFICATION */
+  .toast {
+    position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--gold); color: #000; padding: 14px 28px;
+    border-radius: 50px; font-weight: 700; font-size: 14px;
+    opacity: 0; transition: all 0.4s; z-index: 2000; pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .features-grid { grid-template-columns: 1fr 1fr; }
+    .cars-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+    .branches-grid { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .hero-stats { gap: 24px; }
+    .booking-top { flex-direction: column; gap: 8px; }
+    .booking-form { padding: 24px 20px; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <div class="logo-icon">ZM</div>
+    <div class="logo-text">
+      <span>زياد منصور</span>
+      <span>لتأجير السيارات</span>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#fleet">الأسطول</a>
+    <a href="#booking">احجز الآن</a>
+    <a href="#branches">الفروع</a>
+    <a href="#reviews">التقييمات</a>
+    <a href="#contact">تواصل معنا</a>
+  </div>
+  <button class="nav-cta" onclick="scrollTo('#booking')">احجز سيارتك</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    متاح ٢٤ ساعة | ٧ أيام في الأسبوع
+  </div>
+  <h1>
+    <span class="highlight">سيارتك جاهزة</span><br/>
+    في أي وقت تريد
+  </h1>
+  <p class="hero-sub">أفضل أسطول من السيارات الحديثة والنظيفة بأسعار تنافسية في بغداد — الكرادة، اليرموك، السيدية</p>
+  <div class="hero-actions">
+    <button class="btn-primary" onclick="scrollTo('#booking')">
+      <i class="fas fa-calendar-check"></i>
+      احجز الآن
+    </button>
+    <a class="btn-outline" href="tel:07744488846">
+      <i class="fas fa-phone"></i>
+      0774 448 8846
+    </a>
+  </div>
+  <div class="hero-car-wrap">
+    <svg class="hero-car-svg" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1"/>
+          <stop offset="100%" style="stop-color:#CCCCCC;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="shadowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#C9A227;stop-opacity:0.3"/>
+          <stop offset="100%" style="stop-color:#C9A227;stop-opacity:0"/>
+        </linearGradient>
+      </defs>
+      <!-- Shadow -->
+      <ellipse cx="400" cy="268" rx="310" ry="18" fill="url(#shadowGrad)"/>
+      <!-- Car body lower -->
+      <rect x="100" y="190" width="600" height="70" rx="8" fill="url(#bodyGrad)"/>
+      <!-- Car roof -->
+      <path d="M220 190 Q240 120 310 105 L490 105 Q560 120 580 190 Z" fill="url(#bodyGrad)"/>
+      <!-- Windshield front -->
+      <path d="M490 108 Q555 122 575 188 L498 188 Z" fill="#1a2a3a" opacity="0.8"/>
+      <!-- Windshield rear -->
+      <path d="M310 108 Q245 122 225 188 L302 188 Z" fill="#1a2a3a" opacity="0.8"/>
+      <!-- Windows middle -->
+      <rect x="302" y="112" width="196" height="74" rx="4" fill="#1a2a3a" opacity="0.8"/>
+      <!-- Window pillars -->
+      <rect x="380" y="112" width="8" height="74" fill="url(#bodyGrad)" opacity="0.9"/>
+      <rect x="304" y="112" width="8" height="74" fill="url(#bodyGrad)" opacity="0.9"/>
+      <rect x="488" y="112" width="8" height="74" fill="url(#bodyGrad)" opacity="0.9"/>
+      <!-- Door lines -->
+      <line x1="392" y1="190" x2="392" y2="258" stroke="#aaa" stroke-width="2" opacity="0.4"/>
+      <!-- Headlights -->
+      <rect x="608" y="195" width="50" height="20" rx="5" fill="#FFEB3B" opacity="0.9"/>
+      <rect x="615" y="200" width="36" height="10" rx="3" fill="#FFF9C4"/>
+      <!-- Taillights -->
+      <rect x="142" y="195" width="50" height="20" rx="5" fill="#F44336" opacity="0.9"/>
+      <rect x="149" y="200" width="36" height="10" rx="3" fill="#FFCDD2"/>
+      <!-- Front bumper detail -->
+      <rect x="600" y="220" width="58" height="12" rx="4" fill="#ccc"/>
+      <rect x="140" y="220" width="58" height="12" rx="4" fill="#ccc"/>
+      <!-- Grille front -->
+      <rect x="622" y="228" width="30" height="14" rx="3" fill="#888"/>
+      <line x1="627" y1="228" x2="627" y2="242" stroke="#aaa" stroke-width="1.5"/>
+      <line x1="632" y1="228" x2="632" y2="242" stroke="#aaa" stroke-width="1.5"/>
+      <line x1="637" y1="228" x2="637" y2="242" stroke="#aaa" stroke-width="1.5"/>
+      <line x1="642" y1="228" x2="642" y2="242" stroke="#aaa" stroke-width="1.5"/>
+      <line x1="647" y1="228" x2="647" y2="242" stroke="#aaa" stroke-width="1.5"/>
+      <!-- Wheels -->
+      <circle cx="220" cy="248" r="40" fill="#1a1a1a"/>
+      <circle cx="220" cy="248" r="30" fill="#2a2a2a"/>
+      <circle cx="220" cy="248" r="16" fill="#C9A227"/>
+      <circle cx="220" cy="248" r="10" fill="#111"/>
+      <circle cx="580" cy="248" r="40" fill="#1a1a1a"/>
+      <circle cx="580" cy="248" r="30" fill="#2a2a2a"/>
+      <circle cx="580" cy="248" r="16" fill="#C9A227"/>
+      <circle cx="580" cy="248" r="10" fill="#111"/>
+      <!-- Wheel spokes -->
+      <line x1="220" y1="232" x2="220" y2="264" stroke="#C9A227" stroke-width="3" opacity="0.5"/>
+      <line x1="204" y1="248" x2="236" y2="248" stroke="#C9A227" stroke-width="3" opacity="0.5"/>
+      <line x1="580" y1="232" x2="580" y2="264" stroke="#C9A227" stroke-width="3" opacity="0.5"/>
+      <line x1="564" y1="248" x2="596" y2="248" stroke="#C9A227" stroke-width="3" opacity="0.5"/>
+      <!-- Door handle -->
+      <rect x="340" y="215" width="30" height="6" rx="3" fill="#aaa"/>
+      <rect x="468" y="215" width="30" height="6" rx="3" fill="#aaa"/>
+      <!-- Side mirror -->
+      <path d="M598 165 Q615 163 618 175 L598 178 Z" fill="#ccc"/>
+      <!-- Roof rack subtle -->
+      <rect x="310" y="103" width="180" height="5" rx="2" fill="#bbb" opacity="0.5"/>
+      <!-- Gold accent stripe -->
+      <rect x="140" y="185" width="520" height="5" rx="2" fill="#C9A227" opacity="0.7"/>
+    </svg>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num" data-target="50">0</div>
+      <div class="stat-label">سيارة في الأسطول</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="3">0</div>
+      <div class="stat-label">فروع في بغداد</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">5.0</div>
+      <div class="stat-label">تقييم جوجل ★</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">٢٤/٧</div>
+      <div class="stat-label">خدمة مستمرة</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES BAR -->
+<div class="features-bar">
+  <div class="features-grid">
+    <div class="feature-item">
+      <div class="feat-icon"><i class="fas fa-shield-alt"></i></div>
+      <div>
+        <div class="feat-title">تأمين شامل</div>
+        <div class="feat-desc">جميع سياراتنا مؤمّنة</div>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon"><i class="fas fa-star"></i></div>
+      <div>
+        <div class="feat-title">سيارات حديثة</div>
+        <div class="feat-desc">موديلات 2020 وما فوق</div>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon"><i class="fas fa-headset"></i></div>
+      <div>
+        <div class="feat-title">دعم على مدار الساعة</div>
+        <div class="feat-desc">نرد على اتصالك في أي وقت</div>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon"><i class="fas fa-tags"></i></div>
+      <div>
+        <div class="feat-title">أسعار تنافسية</div>
+        <div class="feat-desc">أفضل قيمة في بغداد</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FLEET -->
+<section class="fleet" id="fleet">
+  <div class="sec-header">
+    <span class="sec-tag">أسطولنا</span>
+    <h2 class="sec-title">اختر سيارتك المثالية</h2>
+    <p class="sec-sub">مجموعة متنوعة من السيارات لكل احتياج وميزانية</p>
+    <div class="gold-line"></div>
+  </div>
+  <div class="car-filters">
+    <button class="filter-btn active" onclick="filterCars('all', this)">الكل</button>
+    <button class="filter-btn" onclick="filterCars('sedan', this)">سيدان</button>
+    <button class="filter-btn" onclick="filterCars('suv', this)">SUV</button>
+    <button class="filter-btn" onclick="filterCars('pickup', this)">بيكأب</button>
+  </div>
+  <div class="cars-grid" id="carsGrid">
+
+    <div class="car-card" data-type="suv">
+      <div class="car-image" style="background: linear-gradient(135deg, #1a1a2e, #16213e);">
+        <svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="160" cy="130" rx="145" ry="8" fill="#C9A227" opacity="0.15"/>
+          <rect x="40" y="75" width="240" height="52" rx="6" fill="#E8E8E8"/>
+          <path d="M80 75 Q90 35 130 28 L195 28 Q235 35 245 75 Z" fill="#F0F0F0"/>
+          <path d="M197 30 Q233 38 243 73 L198 73 Z" fill="#1a3a5c" opacity="0.85"/>
+          <path d="M128 30 Q92 38 82 73 L127 73 Z" fill="#1a3a5c" opacity="0.85"/>
+          <rect x="127" y="32" width="71" height="40" rx="3" fill="#1a3a5c" opacity="0.85"/>
+          <rect x="244" y="79" width="28" height="14" rx="4" fill="#FFD600"/>
+          <rect x="48" y="79" width="28" height="14" rx="4" fill="#D32F2F"/>
+          <circle cx="90" cy="117" r="22" fill="#111"/>
+          <circle cx="90" cy="117" r="14" fill="#2a2a2a"/>
+          <circle cx="90" cy="117" r="7" fill="#C9A227"/>
+          <circle cx="235" cy="117" r="22" fill="#111"/>
+          <circle cx="235" cy="117" r="14" fill="#2a2a2a"/>
+          <circle cx="235" cy="117" r="7" fill="#C9A227"/>
+          <rect x="125" y="93" width="72" height="5" rx="2" fill="#C9A227" opacity="0.6"/>
+        </svg>
+        <span class="car-badge-type">SUV</span>
+      </div>
+      <div class="car-body">
+        <div class="car-make">KIA</div>
+        <div class="car-name">سبورتاج 2023</div>
+        <div class="car-specs">
+          <div class="spec"><i class="fas fa-users"></i> 5 أشخاص</div>
+          <div class="spec"><i class="fas fa-gas-pump"></i> بنزين</div>
+          <div class="spec"><i class="fas fa-snowflake"></i> A/C</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">
+            <div class="price-label">السعر اليومي</div>
+            <div class="price-val">75,000</div>
+            <div class="price-iqd">دينار عراقي</div>
+          </div>
+          <button class="book-btn" onclick="openBooking('كيا سبورتاج 2023')">احجز</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="car-card" data-type="sedan">
+      <div class="car-image" style="background: linear-gradient(135deg, #1a2a1a, #0d1f0d);">
+        <svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="160" cy="130" rx="145" ry="8" fill="#C9A227" opacity="0.15"/>
+          <rect x="50" y="82" width="220" height="45" rx="5" fill="#D4EDDA"/>
+          <path d="M90 82 Q98 45 130 38 L195 38 Q228 45 235 82 Z" fill="#E8F5E9"/>
+          <path d="M196 40 Q226 47 233 80 L198 80 Z" fill="#1a3a1a" opacity="0.85"/>
+          <path d="M129 40 Q99 47 92 80 L127 80 Z" fill="#1a3a1a" opacity="0.85"/>
+          <rect x="127" y="41" width="71" height="37" rx="3" fill="#1a3a1a" opacity="0.85"/>
+          <rect x="248" y="84" width="24" height="12" rx="3" fill="#FFD600"/>
+          <rect x="48" y="84" width="24" height="12" rx="3" fill="#D32F2F"/>
+          <circle cx="92" cy="117" r="19" fill="#111"/>
+          <circle cx="92" cy="117" r="12" fill="#2a2a2a"/>
+          <circle cx="92" cy="117" r="6" fill="#C9A227"/>
+          <circle cx="232" cy="117" r="19" fill="#111"/>
+          <circle cx="232" cy="117" r="12" fill="#2a2a2a"/>
+          <circle cx="232" cy="117" r="6" fill="#C9A227"/>
+          <rect x="130" y="96" width="62" height="4" rx="2" fill="#C9A227" opacity="0.6"/>
+        </svg>
+        <span class="car-badge-type">سيدان</span>
+      </div>
+      <div class="car-body">
+        <div class="car-make">TOYOTA</div>
+        <div class="car-name">كامري 2022</div>
+        <div class="car-specs">
+          <div class="spec"><i class="fas fa-users"></i> 5 أشخاص</div>
+          <div class="spec"><i class="fas fa-gas-pump"></i> بنزين</div>
+          <div class="spec"><i class="fas fa-snowflake"></i> A/C</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">
+            <div class="price-label">السعر اليومي</div>
+            <div class="price-val">65,000</div>
+            <div class="price-iqd">دينار عراقي</div>
+          </div>
+          <button class="book-btn" onclick="openBooking('تويوتا كامري 2022')">احجز</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="car-card" data-type="suv">
+      <div class="car-image" style="background: linear-gradient(135deg, #2a1a0a, #1a0d05);">
+        <svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="160" cy="130" rx="145" ry="8" fill="#C9A227" opacity="0.15"/>
+          <rect x="35" y="70" width="250" height="58" rx="7" fill="#F5DEB3"/>
+          <path d="M75 70 Q85 30 128 22 L197 22 Q242 30 252 70 Z" fill="#FAE8C8"/>
+          <path d="M199 24 Q240 32 250 68 L201 68 Z" fill="#1a2a3a" opacity="0.85"/>
+          <path d="M126 24 Q85 32 75 68 L124 68 Z" fill="#1a2a3a" opacity="0.85"/>
+          <rect x="124" y="25" width="77" height="42" rx="3" fill="#1a2a3a" opacity="0.85"/>
+          <rect x="251" y="73" width="26" height="15" rx="4" fill="#FFD600"/>
+          <rect x="43" y="73" width="26" height="15" rx="4" fill="#D32F2F"/>
+          <circle cx="88" cy="118" r="24" fill="#111"/>
+          <circle cx="88" cy="118" r="16" fill="#2a2a2a"/>
+          <circle cx="88" cy="118" r="8" fill="#C9A227"/>
+          <circle cx="238" cy="118" r="24" fill="#111"/>
+          <circle cx="238" cy="118" r="16" fill="#2a2a2a"/>
+          <circle cx="238" cy="118" r="8" fill="#C9A227"/>
+          <rect x="125" y="87" width="75" height="5" rx="2" fill="#C9A227" opacity="0.6"/>
+        </svg>
+        <span class="car-badge-type">SUV كبير</span>
+      </div>
+      <div class="car-body">
+        <div class="car-make">LAND CRUISER</div>
+        <div class="car-name">لاندكروزر 2022</div>
+        <div class="car-specs">
+          <div class="spec"><i class="fas fa-users"></i> 7 أشخاص</div>
+          <div class="spec"><i class="fas fa-gas-pump"></i> ديزل</div>
+          <div class="spec"><i class="fas fa-snowflake"></i> A/C</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">
+            <div class="price-label">السعر اليومي</div>
+            <div class="price-val">120,000</div>
+            <div class="price-iqd">دينار عراقي</div>
+          </div>
+          <button class="book-btn" onclick="openBooking('لاندكروزر 2022')">احجز</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="car-card" data-type="sedan">
+      <div class="car-image" style="background: linear-gradient(135deg, #0a0a1a, #0d0d2e);">
+        <svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="160" cy="130" rx="145" ry="8" fill="#C9A227" opacity="0.15"/>
+          <rect x="55" y="83" width="210" height="44" rx="5" fill="#B0C4DE"/>
+          <path d="M95 83 Q102 48 133 40 L192 40 Q224 48 230 83 Z" fill="#C5D8EF"/>
+          <path d="M193 42 Q222 49 228 81 L195 81 Z" fill="#1a1a3a" opacity="0.85"/>
+          <path d="M132 42 Q103 49 97 81 L130 81 Z" fill="#1a1a3a" opacity="0.85"/>
+          <rect x="130" y="43" width="65" height="36" rx="3" fill="#1a1a3a" opacity="0.85"/>
+          <rect x="240" y="85" width="22" height="11" rx="3" fill="#FFD600"/>
+          <rect x="58" y="85" width="22" height="11" rx="3" fill="#D32F2F"/>
+          <circle cx="96" cy="117" r="18" fill="#111"/>
+          <circle cx="96" cy="117" r="11" fill="#2a2a2a"/>
+          <circle cx="96" cy="117" r="5" fill="#C9A227"/>
+          <circle cx="228" cy="117" r="18" fill="#111"/>
+          <circle cx="228" cy="117" r="11" fill="#2a2a2a"/>
+          <circle cx="228" cy="117" r="5" fill="#C9A227"/>
+          <rect x="132" y="98" width="60" height="4" rx="2" fill="#C9A227" opacity="0.6"/>
+        </svg>
+        <span class="car-badge-type">سيدان</span>
+      </div>
+      <div class="car-body">
+        <div class="car-make">HYUNDAI</div>
+        <div class="car-name">سوناتا 2023</div>
+        <div class="car-specs">
+          <div class="spec"><i class="fas fa-users"></i> 5 أشخاص</div>
+          <div class="spec"><i class="fas fa-gas-pump"></i> بنزين</div>
+          <div class="spec"><i class="fas fa-snowflake"></i> A/C</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">
+            <div class="price-label">السعر اليومي</div>
+            <div class="price-val">55,000</div>
+            <div class="price-iqd">دينار عراقي</div>
+          </div>
+          <button class="book-btn" onclick="openBooking('هيونداي سوناتا 2023')">احجز</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="car-card" data-type="suv">
+      <div class="car-image" style="background: linear-gradient(135deg, #1a0a1a, #2a0a2a);">
+        <svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="160" cy="130" rx="145" ry="8" fill="#C9A227" opacity="0.15"/>
+          <rect x="42" y="73" width="238" height="54" rx="7" fill="#E0D0EE"/>
+          <path d="M82 73 Q92 33 130 25 L195 25 Q238 33 248 73 Z" fill="#EDE0F5"/>
+          <path d="M197 27 Q236 35 246 71 L199 71 Z" fill="#2a1a3a" opacity="0.85"/>
+          <path d="M128 27 Q89 35 79 71 L126 71 Z" fill="#2a1a3a" opacity="0.85"/>
+          <rect x="126" y="28" width="73" height="41" rx="3" fill="#2a1a3a" opacity="0.85"/>
+          <rect x="249" y="76" width="24" height="14" rx="4" fill="#FFD600"/>
+          <rect x="47" y="76" width="24" height="14" rx="4" fill="#D32F2F"/>
+          <circle cx="90" cy="117" r="22" fill="#111"/>
+          <circle cx="90" cy="117" r="14" fill="#2a2a2a"/>
+          <circle cx="90" cy="117" r="7" fill="#C9A227"/>
+          <circle cx="235" cy="117" r="22" fill="#111"/>
+          <circle cx="235" cy="117" r="14" fill="#2a2a2a"/>
+          <circle cx="235" cy="117" r="7" fill="#C9A227"/>
+          <rect x="127" y="90" width="70" height="5" rx="2" fill="#C9A227" opacity="0.6"/>
+        </svg>
+        <span class="car-badge-type">SUV</span>
+      </div>
+      <div class="car-body">
+        <div class="car-make">MG</div>
+        <div class="car-name">MG RX8 2023</div>
+        <div class="car-specs">
+          <div class="spec"><i class="fas fa-users"></i> 7 أشخاص</div>
+          <div class="spec"><i class="fas fa-gas-pump"></i> بنزين</div>
+          <div class="spec"><i class="fas fa-snowflake"></i> A/C</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">
+            <div class="price-label">السعر اليومي</div>
+            <div class="price-val">85,000</div>
+            <div class="price-iqd">دينار عراقي</div>
+          </div>
+          <button class="book-btn" onclick="openBooking('MG RX8 2023')">احجز</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="car-card" data-type="pickup">
+      <div class="car-image" style="background: linear-gradient(135deg, #1a1200, #0d0a00);">
+        <svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="160" cy="130" rx="145" ry="8" fill="#C9A227" opacity="0.15"/>
+          <!-- Pickup truck body -->
+          <rect x="45" y="80" width="230" height="47" rx="5" fill="#C8A96E"/>
+          <!-- Truck bed -->
+          <rect x="45" y="80" width="100" height="47" rx="5" fill="#B8955A"/>
+          <rect x="50" y="85" width="90" height="37" rx="3" fill="#A0813F"/>
+          <!-- Cab -->
+          <path d="M152 80 Q162 42 195 35 L255 35 Q280 42 278 80 Z" fill="#D4B480"/>
+          <path d="M197 37 Q278 44 276 78 L200 78 Z" fill="#1a2a1a" opacity="0.85"/>
+          <rect x="155" y="38" width="42" height="38" rx="3" fill="#1a2a1a" opacity="0.85"/>
+          <rect x="258" y="82" width="25" height="13" rx="3" fill="#FFD600"/>
+          <rect x="47" y="82" width="20" height="10" rx="3" fill="#D32F2F" opacity="0.6"/>
+          <circle cx="92" cy="116" r="21" fill="#111"/>
+          <circle cx="92" cy="116" r="13" fill="#2a2a2a"/>
+          <circle cx="92" cy="116" r="7" fill="#C9A227"/>
+          <circle cx="240" cy="116" r="21" fill="#111"/>
+          <circle cx="240" cy="116" r="13" fill="#2a2a2a"/>
+          <circle cx="240" cy="116" r="7" fill="#C9A227"/>
+          <rect x="148" y="79" width="5" height="48" fill="#8a6a30"/>
+        </svg>
+        <span class="car-badge-type">بيكأب</span>
+      </div>
+      <div class="car-body">
+        <div class="car-make">TOYOTA</div>
+        <div class="car-name">هايلوكس 2023</div>
+        <div class="car-specs">
+          <div class="spec"><i class="fas fa-users"></i> 5 أشخاص</div>
+          <div class="spec"><i class="fas fa-gas-pump"></i> ديزل</div>
+          <div class="spec"><i class="fas fa-snowflake"></i> A/C</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">
+            <div class="price-label">السعر اليومي</div>
+            <div class="price-val">90,000</div>
+            <div class="price-iqd">دينار عراقي</div>
+          </div>
+          <button class="book-btn" onclick="openBooking('تويوتا هايلوكس 2023')">احجز</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <div class="sec-header">
+    <span class="sec-tag">الحجز</span>
+    <h2 class="sec-title">احجز سيارتك الآن</h2>
+    <p class="sec-sub">أكمل البيانات وسنتواصل معك خلال دقائق</p>
+    <div class="gold-line"></div>
+  </div>
+  <div class="booking-wrap">
+    <div class="booking-top">
+      <h3><i class="fas fa-calendar-check" style="color:var(--gold);margin-left:10px"></i> نموذج الحجز</h3>
+      <span>🟢 متاح الآن للحجز</span>
+    </div>
+    <form class="booking-form" onsubmit="submitBooking(event)">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>الاسم الكامل</label>
+          <input type="text" id="bName" placeholder="أدخل اسمك الكامل" required/>
+        </div>
+        <div class="form-group">
+          <label>رقم الهاتف</label>
+          <input type="tel" id="bPhone" placeholder="07XX XXX XXXX" required/>
+        </div>
+        <div class="form-group">
+          <label>نوع السيارة المطلوبة</label>
+          <select id="bCar">
+            <option value="">اختر السيارة</option>
+            <option>كيا سبورتاج 2023 — 75,000 د.ع</option>
+            <option>تويوتا كامري 2022 — 65,000 د.ع</option>
+            <option>لاندكروزر 2022 — 120,000 د.ع</option>
+            <option>هيونداي سوناتا 2023 — 55,000 د.ع</option>
+            <option>MG RX8 2023 — 85,000 د.ع</option>
+            <option>تويوتا هايلوكس 2023 — 90,000 د.ع</option>
+            <option>أي سيارة متوفرة</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>الفرع المفضل</label>
+          <select id="bBranch">
+            <option value="">اختر الفرع</option>
+            <option>فرع الكرادة</option>
+            <option>فرع اليرموك</option>
+            <option>فرع السيدية</option>
+            <option>أي فرع قريب</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>تاريخ البداية</label>
+          <input type="date" id="bStart" required/>
+        </div>
+        <div class="form-group">
+          <label>تاريخ النهاية</label>
+          <input type="date" id="bEnd" required/>
+        </div>
+        <div class="form-group form-full">
+          <label>ملاحظات إضافية</label>
+          <textarea id="bNotes" rows="3" placeholder="أي طلبات خاصة أو ملاحظات..."></textarea>
+        </div>
+      </div>
+      <div id="priceEstimate" style="display:none; background: rgba(201,162,39,0.08); border: 1px solid rgba(201,162,39,0.25); border-radius: 10px; padding: 16px; margin-bottom: 16px; font-size: 15px; font-weight: 700; color: var(--gold); text-align: center;"></div>
+      <button type="submit" class="form-submit">
+        <i class="fas fa-paper-plane" style="margin-left:8px"></i>
+        إرسال طلب الحجز
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="sec-header">
+    <span class="sec-tag">لماذا نحن</span>
+    <h2 class="sec-title">لماذا تختار زياد منصور؟</h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon"><i class="fas fa-clock"></i></div>
+      <div class="why-title">خدمة ٢٤/٧</div>
+      <div class="why-desc">نحن متاحون على مدار الساعة طوال أيام الأسبوع. اتصل في أي وقت وسنرد بكل نشاط واهتمام</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon"><i class="fas fa-car"></i></div>
+      <div class="why-title">سيارات نظيفة وحديثة</div>
+      <div class="why-desc">جميع سياراتنا حديثة ونظيفة ومصانة بشكل دوري لضمان أعلى مستوى من الراحة والأمان</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon"><i class="fas fa-handshake"></i></div>
+      <div class="why-title">تعامل راقٍ وموثوق</div>
+      <div class="why-desc">تعاملنا الاحترافي الراقي مع عملائنا جعلنا نحصل على تقييم 5 نجوم من جميع مراجعينا</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon"><i class="fas fa-map-marker-alt"></i></div>
+      <div class="why-title">٣ فروع في بغداد</div>
+      <div class="why-desc">نغطي مناطق الكرادة واليرموك والسيدية لنكون قريبين منك دائماً</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon"><i class="fas fa-dollar-sign"></i></div>
+      <div class="why-title">أسعار تنافسية</div>
+      <div class="why-desc">نقدم أفضل الأسعار في السوق دون المساومة على الجودة. قارن ولن تجد أفضل منا</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon"><i class="fas fa-star"></i></div>
+      <div class="why-title">تقييم 5 نجوم</div>
+      <div class="why-desc">حصلنا على تقييم 5 نجوم كامل على خرائط جوجل من جميع عملائنا دون استثناء</div>
+    </div>
+  </div>
+</section>
+
+<!-- BRANCHES -->
+<section class="branches" id="branches">
+  <div class="sec-header">
+    <span class="sec-tag">فروعنا</span>
+    <h2 class="sec-title">نحن في كل مكان في بغداد</h2>
+    <p class="sec-sub">ثلاثة فروع لخدمتك في جميع أنحاء العاصمة</p>
+    <div class="gold-line"></div>
+  </div>
+  <div class="branches-grid">
+    <div class="branch-card">
+      <div class="branch-num">01</div>
+      <div class="branch-name">فرع الكرادة</div>
+      <div class="branch-address">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>بغداد - الكرادة - تقاطع حوزات العامة - مجاور نادي المهندسين</span>
+      </div>
+      <div class="branch-hours">
+        <i class="fas fa-circle" style="font-size:8px"></i>
+        مفتوح ٢٤ ساعة
+      </div>
+      <a href="tel:07744488846" style="display:inline-flex;align-items:center;gap:8px;margin-top:16px;color:var(--gold);font-size:14px;font-weight:700;">
+        <i class="fas fa-phone"></i> 0774 448 8846
+      </a>
+    </div>
+    <div class="branch-card">
+      <div class="branch-num">02</div>
+      <div class="branch-name">فرع اليرموك</div>
+      <div class="branch-address">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>بغداد - اليرموك - شارع جامع الشواف - مقابل المركز الصحي اليرموك</span>
+      </div>
+      <div class="branch-hours">
+        <i class="fas fa-circle" style="font-size:8px"></i>
+        مفتوح ٢٤ ساعة
+      </div>
+      <a href="tel:07744488846" style="display:inline-flex;align-items:center;gap:8px;margin-top:16px;color:var(--gold);font-size:14px;font-weight:700;">
+        <i class="fas fa-phone"></i> 0774 448 8846
+      </a>
+    </div>
+    <div class="branch-card">
+      <div class="branch-num">03</div>
+      <div class="branch-name">فرع السيدية</div>
+      <div class="branch-address">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>السيدية - شارع قطر الندى - مقابل مجمع هاي كلاس السكني</span>
+      </div>
+      <div class="branch-hours">
+        <i class="fas fa-circle" style="font-size:8px"></i>
+        مفتوح ٢٤ ساعة
+      </div>
+      <a href="tel:07805559004" style="display:inline-flex;align-items:center;gap:8px;margin-top:16px;color:var(--gold);font-size:14px;font-weight:700;">
+        <i class="fas fa-phone"></i> 0780 555 9004
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="sec-header">
+    <span class="sec-tag">آراء العملاء</span>
+    <h2 class="sec-title">ماذا يقول عملاؤنا</h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="rating-summary">
+    <div class="big-rating">5.0</div>
+    <div class="rating-stars">★★★★★</div>
+    <div class="rating-count">مبني على 12 تقييم حقيقي على Google Maps</div>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">ماكو شركة بكل العراق مثل تعاملهم الراقي وسياراتهم الحديثة وخدماتهم على مدار ٢٤ ساعة. اتصلت بيهم ساعة ٣ بالليل وجاوبوني بكل نشاط وعطوني كامل التفاصيل. الله يوفقكم ❤️</div>
+      <div class="review-author">
+        <div class="author-avatar">ن</div>
+        <div>
+          <div class="author-name">Nasour S</div>
+          <div class="author-date">منذ سنة • 2 تقييم</div>
+        </div>
+      </div>
+      <div class="google-badge"><i class="fab fa-google"></i> تقييم موثق على Google</div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">والله تعامل راقي، أخذت منهم من الكرادة واليرموك، وأحسن شي فتحوا بالسيدية لأنه قريب. ربي يوفقكم وتكملون التوسع!</div>
+      <div class="review-author">
+        <div class="author-avatar">ا</div>
+        <div>
+          <div class="author-name">أكرم محمد</div>
+          <div class="author-date">منذ سنة • 1 تقييم</div>
+        </div>
+      </div>
+      <div class="google-badge"><i class="fab fa-google"></i> تقييم موثق على Google</div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">شركة مرتبة عاشت إيدكم على السيارات النظيفة. ما شاء الله كل الموظفين محترمين وتعاملهم حلو بكل الفروع. أنصح الكل!</div>
+      <div class="review-author">
+        <div class="author-avatar">ل</div>
+        <div>
+          <div class="author-name">ليث عبدالله يوسف</div>
+          <div class="author-date">منذ سنة • Local Guide</div>
+        </div>
+      </div>
+      <div class="google-badge"><i class="fab fa-google"></i> تقييم موثق على Google</div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">خدمة ممتازة وأسعار معقولة جداً. السيارة كانت نظيفة جداً وبحالة ممتازة. بالتأكيد سأعود مرة أخرى وأنصح بهم لكل الأصدقاء والعائلة.</div>
+      <div class="review-author">
+        <div class="author-avatar">م</div>
+        <div>
+          <div class="author-name">محمد علي</div>
+          <div class="author-date">منذ 8 أشهر</div>
+        </div>
+      </div>
+      <div class="google-badge"><i class="fab fa-google"></i> تقييم موثق على Google</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <h2>جاهز للقيادة؟ 🚗</h2>
+  <p>تواصل معنا الآن واحجز سيارتك — نرد في دقائق</p>
+  <div class="cta-phones">
+    <a class="phone-badge" href="tel:07744488846">
+      <i class="fas fa-phone"></i>
+      0774 448 8846
+    </a>
+    <a class="phone-badge" href="tel:07805559004">
+      <i class="fas fa-phone"></i>
+      0780 555 9004
+    </a>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-info">
+      <h3>تواصل معنا في أي وقت</h3>
+      <p style="color:var(--text-muted); font-size:15px; line-height:1.9; margin-bottom:28px;">نحن هنا لمساعدتك — سواء كان لديك سؤال، تريد حجزاً، أو تحتاج معلومة فورية</p>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="ci-icon"><i class="fas fa-phone-alt"></i></div>
+          <div>
+            <div class="ci-label">الهاتف الرئيسي</div>
+            <div class="ci-value">0774 448 8846</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon"><i class="fas fa-phone"></i></div>
+          <div>
+            <div class="ci-label">هاتف بديل</div>
+            <div class="ci-value">0780 555 9004</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div>
+            <div class="ci-label">الفرع الرئيسي</div>
+            <div class="ci-value">السيدية — شارع قطر الندى</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon"><i class="fas fa-clock"></i></div>
+          <div>
+            <div class="ci-label">أوقات العمل</div>
+            <div class="ci-value" style="color:#4CAF50">مفتوح ٢٤/٧</div>
+          </div>
+        </div>
+      </div>
+      <div class="social-row">
+        <a class="social-btn" href="https://www.instagram.com/zm_rentalcars/" target="_blank" title="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a class="social-btn" href="https://www.facebook.com/p/%D8%B4%D8%B1%D9%83%D8%A9-%D8%B2%D9%8A%D8%A7%D8%AF-%D9%85%D9%86%D8%B5%D9%88%D8%B1-%D9%84%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D8%B3%D9%8A%D8%A7%D8%B1%D8%A7%D8%AA%D9%81%D8%B1%D8%B9-%D8%A7%D9%84%D8%B3%D9%8A%D8%AF%D9%8A%D8%A9-61572244328009/" target="_blank" title="Facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a class="social-btn" href="https://wa.me/9647744488846" target="_blank" title="WhatsApp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </div>
+    </div>
+    <div style="background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 36px;">
+      <h4 style="font-size:18px;font-weight:800;margin-bottom:20px;color:var(--gold);">أرسل لنا رسالة</h4>
+      <form onsubmit="submitContact(event)">
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="form-group">
+            <label>الاسم</label>
+            <input type="text" placeholder="اسمك" required/>
+          </div>
+          <div class="form-group">
+            <label>الهاتف</label>
+            <input type="tel" placeholder="رقمك" required/>
+          </div>
+          <div class="form-group">
+            <label>الرسالة</label>
+            <textarea rows="4" placeholder="كيف يمكننا مساعدتك؟" required></textarea>
+          </div>
+          <button type="submit" class="form-submit" style="margin-top:0">
+            <i class="fas fa-paper-plane" style="margin-left:8px"></i>
+            إرسال الرسالة
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="logo-icon">ZM</div>
+    <div class="logo-text">
+      <span style="color:var(--gold);font-size:14px;font-weight:800;">زياد منصور</span>
+      <span style="color:var(--text-muted);font-size:11px;">لتأجير السيارات • بغداد</span>
+    </div>
+  </div>
+  <div class="footer-copy" style="text-align:center; line-height:1.9;">
+    © 2024 شركة زياد منصور لتأجير السيارات — جميع الحقوق محفوظة<br/>
+    <span style="font-size:12px; color:#666;">
+      ⚠️ هذا نموذج تجريبي &nbsp;|&nbsp; تصميم وتطوير: مهندس يوسف &nbsp;|&nbsp; خدمات IT وحلول رقمية
+    </span>
+  </div>
+  <div class="footer-links">
+    <a href="#fleet">الأسطول</a>
+    <a href="#branches">الفروع</a>
+    <a href="#contact">تواصل معنا</a>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a class="wa-float" href="https://wa.me/9647744488846" target="_blank" title="تواصل عبر واتساب">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Smooth scroll
+  function scrollTo(id) {
+    document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Counter animation
+  function animateCounter(el, target, isDecimal) {
+    const duration = 2000;
+    const step = target / (duration / 16);
+    let current = 0;
+    const interval = setInterval(() => {
+      current += step;
+      if (current >= target) { current = target; clearInterval(interval); }
+      el.textContent = isDecimal ? current.toFixed(1) : Math.floor(current) + '+';
+    }, 16);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const els = document.querySelectorAll('[data-target]');
+        els.forEach(el => {
+          const target = parseFloat(el.dataset.target);
+          animateCounter(el, target, false);
+        });
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const heroStats = document.querySelector('.hero-stats');
+  if (heroStats) observer.observe(heroStats);
+
+  // Car filter
+  function filterCars(type, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.car-card').forEach(card => {
+      card.style.display = (type === 'all' || card.dataset.type === type) ? 'block' : 'none';
+    });
+  }
+
+  // Open booking with car pre-selected
+  function openBooking(carName) {
+    document.getElementById('bCar').value = '';
+    const opts = document.getElementById('bCar').options;
+    for (let o of opts) { if (o.text.includes(carName.split(' ')[0])) { document.getElementById('bCar').value = o.value; break; } }
+    document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Price estimate
+  function calcPrice() {
+    const start = new Date(document.getElementById('bStart').value);
+    const end = new Date(document.getElementById('bEnd').value);
+    const car = document.getElementById('bCar').value;
+    if (!start || !end || !car || end <= start) { document.getElementById('priceEstimate').style.display = 'none'; return; }
+    const days = Math.ceil((end - start) / 86400000);
+    const priceMap = { 'كيا': 75000, 'تويوتا كامري': 65000, 'لاند': 120000, 'هيونداي': 55000, 'MG': 85000, 'هايلوكس': 90000 };
+    let daily = 0;
+    for (const [k, v] of Object.entries(priceMap)) { if (car.includes(k)) { daily = v; break; } }
+    if (!daily) daily = 70000;
+    const total = (days * daily).toLocaleString('ar-IQ');
+    const el = document.getElementById('priceEstimate');
+    el.style.display = 'block';
+    el.innerHTML = `تقدير السعر: <span style="font-size:20px">${days} يوم × ${daily.toLocaleString('ar-IQ')} د.ع = <strong>${total} دينار عراقي</strong></span>`;
+  }
+
+  document.getElementById('bStart')?.addEventListener('change', calcPrice);
+  document.getElementById('bEnd')?.addEventListener('change', calcPrice);
+  document.getElementById('bCar')?.addEventListener('change', calcPrice);
+
+  // Toast
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  // Booking submit
+  function submitBooking(e) {
+    e.preventDefault();
+    const name = document.getElementById('bName').value;
+    const phone = document.getElementById('bPhone').value;
+    const car = document.getElementById('bCar').value || 'غير محدد';
+    const branch = document.getElementById('bBranch').value || 'غير محدد';
+    const start = document.getElementById('bStart').value;
+    const end = document.getElementById('bEnd').value;
+    const msg = `مرحباً، أريد حجز سيارة:\nالاسم: ${name}\nالهاتف: ${phone}\nالسيارة: ${car}\nالفرع: ${branch}\nمن: ${start}\nإلى: ${end}`;
+    window.open(`https://wa.me/9647744488846?text=${encodeURIComponent(msg)}`, '_blank');
+    showToast('✅ تم إرسال طلب الحجز عبر واتساب!');
+  }
+
+  function submitContact(e) {
+    e.preventDefault();
+    showToast('✅ تم إرسال رسالتك، سنتواصل معك قريباً!');
+    e.target.reset();
+  }
+
+  // Fade in on scroll
+  const fadeEls = document.querySelectorAll('.car-card, .why-card, .branch-card, .review-card');
+  const fadeObs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }, i * 60);
+        fadeObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  fadeEls.forEach(el => {
+    el.style.opacity = '0'; el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    fadeObs.observe(el);
+  });
+
+  // Set min date for booking
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('bStart').min = today;
+  document.getElementById('bEnd').min = today;
+</script>
+</body>
+</html>
